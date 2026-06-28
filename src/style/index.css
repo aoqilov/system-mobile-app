@@ -1,0 +1,93 @@
+﻿@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── CSS Variables ─────────────────────────────────────────── */
+
+:root {
+  /* design tokens — light */
+  --screen-bg: #F2F3F5;
+  --surface: #FFFFFF;
+  --card: #FFFFFF;
+  --soft: #F1F2F4;
+  --text: #222222;
+  --text2: #9AA0A6;
+  --sep: #ECECEC;
+  --tabbar: rgba(255,255,255,0.92);
+  --inputbg: #FFFFFF;
+  --inputbd: #ECECEC;
+  --shadow: 0 6px 20px rgba(20,30,40,0.07);
+  --hdr: linear-gradient(165deg,#F9D9EC 0%,#DCE7FF 62%,#EAF6FF 100%);
+  --toggle-off: #E3E4E8;
+
+  /* legacy aliases (mavjud komponentlar uchun) */
+  --bg-main: #F2F3F5;
+  --bg-second: #FFFFFF;
+  --bg-hover: #F1F2F4;
+  --bg-input: #FFFFFF;
+  --text-default: #222222;
+  --text-2: #333333;
+  --text-3: #555555;
+  --text-4: #777777;
+  --text-muted: #9AA0A6;
+  --text-dim: #9AA0A6;
+  --border-default: #ECECEC;
+  --border-2: #DEDEDE;
+  --border-input: #ECECEC;
+}
+
+.dark {
+  /* design tokens — dark */
+  --screen-bg: #0F1012;
+  --surface: #1C1D20;
+  --card: #26272B;
+  --soft: #26272B;
+  --text: #F5F6F7;
+  --text2: #8A9095;
+  --sep: rgba(120,128,140,0.18);
+  --tabbar: rgba(20,21,24,0.93);
+  --inputbg: #26272B;
+  --inputbd: rgba(120,128,140,0.2);
+  --shadow: 0 6px 20px rgba(0,0,0,0.42);
+  --hdr: linear-gradient(165deg,#3a2740 0%,#22304e 70%,#1a2436 100%);
+  --toggle-off: #3A3B40;
+
+  /* legacy aliases */
+  --bg-main: #0F1012;
+  --bg-second: #1C1D20;
+  --bg-hover: #26272B;
+  --bg-input: #26272B;
+  --text-default: #F5F6F7;
+  --text-2: #DDDDDD;
+  --text-3: #BBBBBB;
+  --text-4: #999999;
+  --text-muted: #8A9095;
+  --text-dim: #8A9095;
+  --border-default: rgba(120,128,140,0.18);
+  --border-2: rgba(120,128,140,0.28);
+  --border-input: rgba(120,128,140,0.2);
+}
+
+/* ─── Base ──────────────────────────────────────────────────── */
+@layer base {
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    transition:
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      color 0.15s ease;
+  }
+
+ 
+  body {
+    background-color: var(--screen-bg);
+    color: var(--text);
+    font-family: "Nunito", sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
