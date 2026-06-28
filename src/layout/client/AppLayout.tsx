@@ -1,4 +1,4 @@
-import { Suspense, useEffect } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Footer from "./footer/Footer";
 import { useGetSizeDevice } from "../../hooks/useGetSizeDevice";
@@ -9,6 +9,12 @@ const AppLayout = () => {
   const navigate = useNavigate();
   const { platform, height } = useGetSizeDevice();
   const { theme } = useTheme();
+  const mainRef = useRef<HTMLElement>(null);
+
+  // Route o'zgarganda scroll ni tepaga qaytarish
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0 });
+  }, [location.pathname]);
 
   return (
     <div
@@ -43,7 +49,7 @@ const AppLayout = () => {
           minHeight: "var(--tg-safe-area-inset-top, 0px)",
         }}
       />
-      <main className="flex-1 overflow-y-auto px-2 relative -mt-1.5">
+      <main ref={mainRef} className="flex-1 overflow-y-auto px-2 relative -mt-1.5">
         <Suspense
           fallback={
             <div

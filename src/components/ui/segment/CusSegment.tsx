@@ -1,5 +1,5 @@
 import { SegmentGroup } from "@chakra-ui/react";
-import type { ReactNode } from "react";
+import { act, type ReactNode } from "react";
 
 const SCOPE = "cus-segment";
 
@@ -7,8 +7,11 @@ const segmentStyles = `
   .${SCOPE} [data-part="item"][data-state="checked"] {
     color: #ffffff !important;
   }
+  .${SCOPE} [data-part="item"]:not([data-state="checked"]):not([data-disabled]) {
+    color: var(--text2) !important;
+  }
   .${SCOPE} [data-part="item"]:not([data-disabled]):hover {
-    color: var(--text-3) !important;
+    color: var(--text) !important;
   }
 `;
 
@@ -53,35 +56,40 @@ export const CusSegment = ({
         disabled={disabled}
         className={`${SCOPE}${className ? ` ${className}` : ""}`}
         style={{
-          background: "var(--bg-hover)",
-          borderRadius: "10px",
-          padding: "3px",
-          gap: "2px",
-          border: "1px solid var(--border-default)",
+          background: "var(--soft)",
+          borderRadius: "14px",
+          padding: "4px",
+          gap: "3px",
+          border: "1px solid var(--sep)",
           display: "inline-flex",
+          width: "100%",
         }}
       >
         <SegmentGroup.Indicator
           style={{
-            background: "var(--color-blue)",
-            borderRadius: "7px",
-            boxShadow:
-              "0 1px 3px rgba(0,0,0,0.10), 0 0 0 1px var(--border-default)",
+            background: "linear-gradient(135deg, #1292A7 0%, #0E7C8E 100%)",
+            borderRadius: "10px",
+            boxShadow: "0 4px 12px rgba(18,146,167,0.30)",
           }}
         />
         {items.map((item) => {
           const key = item.id ?? item.label;
+          const isActive = key === value;
           return (
             <SegmentGroup.Item
               key={key}
               value={key}
               disabled={item.disabled}
               style={{
-                borderRadius: "7px",
-                color: "var(--text-muted)",
-                fontWeight: 500,
-                transition: "color 0.15s ease",
+                borderRadius: "10px",
+                color: isActive ? "#ffffff" : "var(--text2)",
+                fontFamily: "Nunito, sans-serif",
+                fontWeight: 700,
+                fontSize: 13,
+                transition: "color 0.2s ease",
                 cursor: item.disabled ? "not-allowed" : "pointer",
+                flex: 1,
+                justifyContent: "center",
               }}
             >
               <SegmentGroup.ItemText style={{ color: "inherit" }}>
@@ -90,6 +98,7 @@ export const CusSegment = ({
                     display: "inline-flex",
                     alignItems: "center",
                     gap: "6px",
+                    color: isActive ? "#ffffff" : "var(--text2)",
                     flexDirection:
                       iconPosition === "right" ? "row-reverse" : "row",
                   }}

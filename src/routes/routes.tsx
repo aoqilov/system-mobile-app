@@ -9,6 +9,7 @@ const MapPage = lazy(() => import("../pages/MapPage"));
 const MomentsPage = lazy(() => import("../pages/MomentsPage"));
 const ProfilePage = lazy(() => import("../pages/ProfilePage"));
 const ScanerPage = lazy(() => import("../pages/ScanerPage"));
+const AttractionListPage = lazy(() => import("../pages/AttractionListPage"));
 
 export const routes: RouteObject[] = [
   { path: "/login", element: <LoginPage /> },
@@ -21,6 +22,7 @@ export const routes: RouteObject[] = [
       { path: "/moments", element: <MomentsPage /> },
       { path: "/profile", element: <ProfilePage /> },
       { path: "/scaner", element: <ScanerPage /> },
+      { path: "/attractions", element: <AttractionListPage /> },
     ],
   },
 ];

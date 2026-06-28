@@ -1,5 +1,8 @@
-import { FiCamera, FiChevronRight, FiBell } from "react-icons/fi";
+import { useState } from "react";
+import { FiCamera, FiChevronRight, FiBell, FiStar, FiUser, FiUsers, FiClock } from "react-icons/fi";
+import { TbRuler, TbWeight } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
+import { CusDrawer } from "../../../components/ui/drawer/CusDrawer";
 
 const categories = [
   { label: "Аттракционы", img: "/images/cat-rides.png" },
@@ -8,29 +11,70 @@ const categories = [
   { label: "Кафе", img: "/images/cat-food.png" },
 ];
 
-const attractions = [
-  {
-    name: "Карусель",
-    price: "50 000 сум",
-    rating: 4.9,
-    img: "/images/ride-carousel.png",
-  },
-  {
-    name: "Колесо обозрения",
-    price: "70 000 сум",
-    rating: 4.7,
-    img: "/images/ride-ferris.png",
-  },
-  {
-    name: "Карусель",
-    price: "50 000 сум",
-    rating: 4.9,
-    img: "/images/ride-carousel.png",
-  },
+type HomeAttraction = {
+  name: string;
+  price: string;
+  rating: number;
+  img: string;
+  minAge: number;
+};
+
+const attractions: HomeAttraction[] = [
+  { name: "Карусель",        price: "50 000 сум", rating: 4.9, img: "/images/ride-carousel.png", minAge: 3  },
+  { name: "Колесо обозрения", price: "70 000 сум", rating: 4.7, img: "/images/ride-ferris.png",   minAge: 7  },
+  { name: "Карусель",        price: "50 000 сум", rating: 4.9, img: "/images/ride-carousel.png", minAge: 3  },
 ];
+
+const RULES = (minAge: number) => [
+  { icon: <FiUser size={18} />,   color: "#4A9EFF", value: `${minAge}+`,  label: "Мин. возраст" },
+  { icon: <TbRuler size={18} />,  color: "#9B6FFF", value: "90 см",       label: "Макс. рост"   },
+  { icon: <TbWeight size={18} />, color: "#22D3EE", value: "50 кг",       label: "Макс. вес"    },
+  { icon: <FiClock size={18} />,  color: "#FBBF24", value: "7 мин",       label: "1 оборот"     },
+  { icon: <FiUsers size={18} />,  color: "#4ADE80", value: "8 мест",      label: "За цикл"      },
+];
+
+const RuleCard = ({ icon, color, value, label }: { icon: React.ReactNode; color: string; value: string; label: string }) => (
+  <div style={{ background: "var(--soft)", border: "1px solid var(--sep)", borderRadius: 14, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 4, padding: "12px 8px" }}>
+    <span style={{ color }}>{icon}</span>
+    <span style={{ fontFamily: "'Baloo 2',sans-serif", fontWeight: 700, fontSize: 17, color: "var(--text)", lineHeight: 1 }}>{value}</span>
+    <span style={{ fontFamily: "Nunito,sans-serif", fontSize: 11, color: "var(--text2)", textAlign: "center", lineHeight: "14px" }}>{label}</span>
+  </div>
+);
+
+const AttractionDetail = ({ item }: { item: HomeAttraction }) => {
+  const rules = RULES(item.minAge);
+  return (
+    <div style={{ paddingBottom: 24 }}>
+      <img src={item.img} alt={item.name} style={{ width: "100%", height: 220, objectFit: "cover" }} />
+
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 20px 12px" }}>
+        <p style={{ fontFamily: "'Baloo 2',sans-serif", fontWeight: 700, fontSize: 20, color: "var(--text)", margin: 0 }}>{item.name}</p>
+        <span style={{ display: "flex", alignItems: "center", gap: 4, fontFamily: "Nunito,sans-serif", fontWeight: 700, fontSize: 14, color: "var(--text2)" }}>
+          <FiStar size={14} color="#FFB000" fill="#FFB000" />{item.rating}
+        </span>
+      </div>
+
+      <div style={{ padding: "0 20px" }}>
+        <p style={{ fontFamily: "'Baloo 2',sans-serif", fontWeight: 700, fontSize: 15, color: "var(--text)", marginBottom: 12 }}>Правила</p>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 10, marginBottom: 10 }}>
+          {rules.slice(0, 3).map((r, i) => <RuleCard key={i} {...r} />)}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(2,1fr)", gap: 10 }}>
+          {rules.slice(3).map((r, i) => <RuleCard key={i} {...r} />)}
+        </div>
+      </div>
+
+      <div style={{ margin: "16px 20px 0", background: "var(--soft)", border: "1px solid var(--sep)", borderRadius: 16, padding: "12px 16px", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <span style={{ fontFamily: "Nunito,sans-serif", fontWeight: 600, fontSize: 13, color: "var(--text2)" }}>Цена</span>
+        <span style={{ fontFamily: "'Baloo 2',sans-serif", fontWeight: 700, fontSize: 20, color: "#1292A7" }}>{item.price}</span>
+      </div>
+    </div>
+  );
+};
 
 const FeatureHomePage = () => {
   const navigate = useNavigate();
+  const [selected, setSelected] = useState<HomeAttraction | null>(null);
 
   return (
     <div
@@ -135,7 +179,7 @@ const FeatureHomePage = () => {
 
       {/* Content sheet */}
       <div
-        className="relative px-4 flex flex-col pb-28"
+        className="relative px-4 flex flex-col pb-8"
         style={{
           background: "var(--screen-bg)",
           borderRadius: "30px 30px 0 0",
@@ -317,13 +361,14 @@ const FeatureHomePage = () => {
               Аттракционы
             </span>
             <span
-              className="flex items-center gap-1 cursor-pointer"
+              className="flex items-center gap-1 cursor-pointer active:opacity-60 transition-opacity"
               style={{
                 fontFamily: "'Baloo 2',sans-serif",
                 fontWeight: 500,
                 fontSize: 15,
                 color: "var(--text)",
               }}
+              onClick={() => navigate("/attractions")}
             >
               Все <FiChevronRight size={16} />
             </span>
@@ -350,54 +395,38 @@ const FeatureHomePage = () => {
                     alt={item.name}
                     className="w-full h-full object-cover"
                   />
-                  <span
-                    className="absolute flex items-center gap-[3px]"
-                    style={{
-                      top: 8,
-                      right: 8,
-                      height: 20,
-                      padding: "0 7px",
-                      borderRadius: 20,
-                      background: "rgba(255,255,255,0.92)",
-                      fontFamily: "Nunito,sans-serif",
-                      fontWeight: 700,
-                      fontSize: 11,
-                      color: "#222",
-                    }}
-                  >
-                    <svg
-                      width="11"
-                      height="11"
-                      viewBox="0 0 24 24"
-                      fill="#FFB000"
-                    >
-                      <path d="M12 2l2.9 6 6.6.6-5 4.3 1.5 6.4L12 16.9 5.9 19.3 7.4 12.9l-5-4.3 6.6-.6z" />
-                    </svg>
-                    {item.rating}
-                  </span>
                 </div>
                 <div style={{ padding: "9px 11px 12px" }}>
-                  <div
-                    style={{
-                      fontFamily: "'Baloo 2',sans-serif",
-                      fontWeight: 600,
-                      fontSize: 14,
-                      color: "var(--text)",
-                    }}
-                  >
+                  <div style={{ fontFamily: "'Baloo 2',sans-serif", fontWeight: 600, fontSize: 14, color: "var(--text)" }}>
                     {item.name}
                   </div>
-                  <div
+                  <div className="flex items-center justify-between" style={{ marginTop: 4 }}>
+                    <span className="flex items-center gap-[3px]" style={{ fontFamily: "Nunito,sans-serif", fontWeight: 700, fontSize: 11, color: "var(--text2)" }}>
+                      <FiStar size={11} color="#FFB000" fill="#FFB000" />
+                      {item.rating}
+                    </span>
+                    <span style={{ fontFamily: "Nunito,sans-serif", fontWeight: 700, fontSize: 11.5, color: "#1292A7" }}>
+                      {item.price}
+                    </span>
+                  </div>
+                  <button
+                    className="w-full active:scale-95 transition-transform"
+                    onClick={() => setSelected(item)}
                     style={{
-                      fontFamily: "Nunito,sans-serif",
+                      marginTop: 8,
+                      height: 30,
+                      borderRadius: 10,
+                      border: "none",
+                      background: "linear-gradient(135deg, #1292A7 0%, #0E7C8E 100%)",
+                      color: "#fff",
+                      fontFamily: "Nunito, sans-serif",
                       fontWeight: 700,
-                      fontSize: 12.5,
-                      color: "var(--text2)",
-                      marginTop: 2,
+                      fontSize: 11.5,
+                      cursor: "pointer",
                     }}
                   >
-                    {item.price}
-                  </div>
+                    Подробнее
+                  </button>
                 </div>
               </div>
             ))}
@@ -466,6 +495,13 @@ const FeatureHomePage = () => {
           />
         </div>
       </div>
+      <CusDrawer
+        isOpen={!!selected}
+        onClose={() => setSelected(null)}
+        title={selected?.name}
+      >
+        {selected && <AttractionDetail item={selected} />}
+      </CusDrawer>
     </div>
   );
 };

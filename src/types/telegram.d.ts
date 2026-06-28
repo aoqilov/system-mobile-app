@@ -77,6 +77,8 @@ interface TelegramWebApp {
   requestContact(callback: (sent: boolean) => void): void;
   requestFullscreen(): void;
   exitFullscreen(): void;
+  disableVerticalSwipes(): void;
+  enableVerticalSwipes(): void;
 }
 
 interface Window {
