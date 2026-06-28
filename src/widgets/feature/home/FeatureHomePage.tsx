@@ -144,7 +144,8 @@ const FeatureHomePage = () => {
         {/* Camera + Bell */}
         <div className="flex gap-2">
           <button
-            className="w-[35px] h-[35px] rounded-full flex items-center justify-center"
+            className="w-[35px] h-[35px] rounded-full flex items-center justify-center active:scale-90 transition-transform"
+            onClick={() => navigate("/memories")}
             style={{
               background: "#fff",
               boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
