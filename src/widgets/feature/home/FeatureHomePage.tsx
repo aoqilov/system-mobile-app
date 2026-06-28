@@ -85,7 +85,7 @@ const FeatureHomePage = () => {
       </div>
 
       {/* Spacer — hero balandligi */}
-      <div style={{ height: 196 }} />
+      <div style={{ height: 230 }} />
 
       {/* Content sheet */}
       <div
