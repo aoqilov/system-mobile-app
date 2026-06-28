@@ -74,17 +74,28 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
     transition:
       background-color 0.2s ease,
       border-color 0.2s ease,
       color 0.15s ease;
   }
 
- 
   body {
     background-color: var(--screen-bg);
     color: var(--text);
     font-family: "Nunito", sans-serif;
+    /* iOS bounce scroll o'chirish */
+    overscroll-behavior: none;
+  }
+
+  button, a {
+    touch-action: manipulation;
+  }
+
+  input, textarea, select {
+    /* iOS auto-zoom oldini olish — font-size 16px dan kam bo'lmasin */
+    font-size: max(16px, 1em);
   }
 
   ::-webkit-scrollbar {

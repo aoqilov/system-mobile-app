@@ -22,10 +22,11 @@ const Footer = () => {
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         borderTop: "1px solid var(--sep)",
-        height: 64,
+        height: "calc(64px + env(safe-area-inset-bottom, 0px))",
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
-      <nav className="flex items-center justify-between h-full px-4 relative">
+      <nav className="flex items-center justify-between h-[64px] px-4 relative">
         {leftItems.map(({ to, label, icon: Icon }) => (
           <NavLink key={to} to={to} end={to === "/"}>
             {({ isActive }) => (

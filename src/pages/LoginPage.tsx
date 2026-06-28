@@ -98,8 +98,9 @@ const LoginPage = () => {
           style={{ background: "rgba(0,0,0,0.08)" }}
         />
         <div
-          className="absolute left-0 right-0 bottom-0 px-6 pt-8 pb-10"
+          className="absolute left-0 right-0 bottom-0 px-6 pt-8"
           style={{
+            paddingBottom: "calc(40px + env(safe-area-inset-bottom, 0px))",
             background: "var(--surface)",
             borderRadius: "30px 30px 0 0",
             boxShadow: "0 -10px 40px rgba(0,0,0,0.18)",
@@ -187,8 +188,9 @@ const LoginPage = () => {
           style={{ background: "rgba(0,0,0,0.08)" }}
         />
         <div
-          className="absolute left-0 right-0 bottom-0 px-6 pt-8 pb-10"
+          className="absolute left-0 right-0 bottom-0 px-6 pt-8"
           style={{
+            paddingBottom: "calc(40px + env(safe-area-inset-bottom, 0px))",
             background: "var(--surface)",
             borderRadius: "30px 30px 0 0",
             boxShadow: "0 -10px 40px rgba(0,0,0,0.18)",
@@ -331,8 +333,9 @@ const LoginPage = () => {
 
       {/* Modal sheet */}
       <div
-        className="relative w-full px-6 pt-7 pb-10"
+        className="relative w-full px-6 pt-7"
         style={{
+          paddingBottom: "calc(40px + env(safe-area-inset-bottom, 0px))",
           background: "var(--surface)",
           borderRadius: "26px 26px 0 0",
           boxShadow: "0 -10px 40px rgba(0,0,0,0.18)",

@@ -4,6 +4,7 @@ import {
   FiUsers, FiCreditCard, FiUser, FiMoon, FiHeadphones,
 } from "react-icons/fi";
 import { useTheme } from "../../../context/ThemeContext";
+import { useTelegram } from "../../../hooks/useTelegram";
 
 const menuItems = [
   { icon: FiUser,       label: "Личные данные",  sub: "Имя, дата рождения, телефон", iconBg: "#E8F4FF", iconColor: "#1292A7", type: "link" },
@@ -17,8 +18,14 @@ const menuItems = [
 
 const FeatureProfilePage = () => {
   const { theme, toggle } = useTheme();
+  const { user } = useTelegram();
   const isDark = theme === "dark";
   const [notif, setNotif] = useState(true);
+
+  const displayName = user
+    ? [user.first_name, user.last_name].filter(Boolean).join(" ")
+    : "София";
+  const displaySub = user?.username ? `@${user.username}` : "+998 (90) 123 - 44 - 44";
 
   return (
     <div className="pb-24 min-h-screen" style={{ backgroundColor: "var(--screen-bg)" }}>
@@ -47,10 +54,10 @@ const FeatureProfilePage = () => {
               className="text-xl font-bold"
               style={{ color: "var(--text)", fontFamily: "Baloo 2, sans-serif" }}
             >
-              София
+              {displayName}
             </p>
             <p className="text-sm font-semibold" style={{ color: "var(--text2)" }}>
-              +998 (90) 123 - 44 - 44
+              {displaySub}
             </p>
           </div>
         </div>
