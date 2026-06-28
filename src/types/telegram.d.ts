@@ -75,6 +75,8 @@ interface TelegramWebApp {
   offEvent(eventType: string, handler: () => void): void;
   sendData(data: string): void;
   requestContact(callback: (sent: boolean) => void): void;
+  requestFullscreen(): void;
+  exitFullscreen(): void;
 }
 
 interface Window {
